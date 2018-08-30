@@ -16,6 +16,17 @@ import unicodedata
 client = MongoClient('mongodb://tesla:d0n0ldduck@18.233.38.167', 27017)
 db = client.text
 
+def getMaxSimilarity():
+    client = MongoClient('mongodb://tesla:d0n0ldduck@18.233.38.167', 27017)
+    db = client.text
+    cursor = db.trit.find({"$or":[{"sentences.instances.Type":"e/Company"},
+                                  {"sentences.instances.Type":"e/Organization"}]}, 
+                            {"body":1}).skip(10).limit(5)
+    for c in cursor:
+        text = c.get("body.text")
+        
+        
+
 def process(str):
     # remove accented characters
     str = unicodedata.normalize('NFKD', str).encode('ascii', 'ignore').decode('utf-8','ignore')

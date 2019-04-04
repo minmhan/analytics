@@ -7,9 +7,9 @@ Created on Thu Aug 16 11:03:54 2018
 import spacy
 
 class SpacyModel(object):
-    def __init__(self):
-        self.nlp = spacy.load('en_core_web_sm')
-        #self.nlp = spacy.load('D:\Research\Python\Analysis\model\org')
+    def __init__(self, m):
+        self.nlp = spacy.load(m)
+
         
     def getSentences(self, s):
         doc = self.nlp(s)
@@ -18,6 +18,7 @@ class SpacyModel(object):
             sents.append(str(s))
                         
         return sents
+
 
     def getPOS(self, s):
         doc = self.nlp(s)
@@ -44,3 +45,20 @@ class SpacyModel(object):
         for e in doc.ents:
             ent.append({ "text": e.text, "start": e.start_char, "end":e.end_char, "label":e.label_})
         return ent
+    
+    def getOrg(self, s):
+        doc = self.nlp(s)
+        org = []
+        for e in doc.ents:
+            org.append({ "text": e.text, "start": e.start_char, "end":e.end_char, "label":e.label_})
+        return org
+    
+
+    def getNounChunk(self, s):
+        doc = self.nlp(s)
+        chunks = []
+        for c in doc.noun_chunks:
+            chunks.append({ "text": c.text, "root": c.root.text, "dep":c.root.dep_ })
+        
+        return chunks
+    

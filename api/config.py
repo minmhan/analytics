@@ -16,3 +16,11 @@ class Config(object):
     NEO4J_USER_NAME = os.environ.get('NEO4J_USER_NAME') or 'neo4j'
     NEO4J_USER_PASSWORD = os.environ.get('NEO4J_USER_PASSWORD') or 'password'
     
+    SPACY_DEFAULT_MODEL = 'en_core_web_sm'
+    SPACY_ENTITY_TRAINED_MODEL = 'D:\\Research\\spacyTrain\\PermId\\model-final'
+    
+    def __init__(self):
+        pass
+    
+    def load(self):
+        pass

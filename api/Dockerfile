@@ -12,12 +12,14 @@ RUN venv/bin/pip install -r requirements.txt
 RUN venv/bin/pip install gunicorn
 RUN venv/bin/pip install -U spacy
 RUN venv/bin/python -m spacy download en
-RUN venv/bin/python -m nltk.downloader -d /usr/local/share/nltk_data wordnet
+#RUN venv/bin/python -m nltk.downloader -d /usr/local/share/nltk_data wordnet
 
 COPY core core
 COPY endpoints endpoints
 COPY app.py config.py boot.sh ./
+COPY en_permid_org_ner-0.0.0.tar.gz ./
 RUN chmod +x boot.sh
+#RUN venv/bin/pip install en_permid_org_ner-0.0.0.tar.gz
 
 ENV FLASK_APP app.py
 

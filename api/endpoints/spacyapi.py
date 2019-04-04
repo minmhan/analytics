@@ -18,10 +18,12 @@ spacy = api.model('Spacy', {
 parser = api.parser()
 parser.add_argument('text', type=str, required=True, help = 'input text')
 
+sp = SpacyModel("en_core_web_sm")
+#sp_org = SpacyModel("en_permid_org_ner")
+
 @api.route('/sentence/<string:text>')
 class GetSentence(Resource):
     def get(self, text):
-        sp = SpacyModel()
         sentences = sp.getSentences(text)
         return sentences
 
@@ -30,24 +32,20 @@ class Sentence(Resource):
     @api.expect(spacy)
     def post(self):
         p = api.payload
-        sp = SpacyModel()
         sentences = sp.getSentences(p['text'])
         return sentences
                
 @api.route('/pos/<string:text>')
 class GetPos(Resource):
     def get(self, text):
-        sp = SpacyModel()
         pos = sp.getPOS(text)
         return pos
-
 
 @api.route('/pos/')
 class Pos(Resource):
     @api.expect(spacy)
     def post(self):
         p = api.payload
-        sp = SpacyModel()
         pos = sp.getPOS(p['text'])
         return pos
 
@@ -56,7 +54,6 @@ class Pos(Resource):
 class GetDependency(Resource):
     @api.doc("get dependency")
     def get(self, text):
-        sp = SpacyModel()
         dep = sp.getDependency(text)
         return dep
 
@@ -65,14 +62,12 @@ class Dependency(Resource):
     @api.expect(spacy)
     def post(self):
         p = api.payload
-        sp = SpacyModel()
         dep = sp.getDependency(p['text'])
         return dep
     
 @api.route('/ent/<string:text>')
 class GetEnt(Resource):
     def get(self, text):
-        sp = SpacyModel()
         ent = sp.getEntity(text)
         return ent
     
@@ -81,6 +76,24 @@ class Ent(Resource):
     @api.expect(spacy)
     def post(self):
         p = api.payload
-        sp = SpacyModel()
         ent = sp.getEntity(p['text'])
         return ent
+
+#
+#@api.route('/org/')
+#class Org(Resource):
+#    @api.expect(spacy)
+#    def post(self):
+#        p = api.payload
+#        org = sp_org.getOrg(p['text'])
+#        return org
+    
+    
+@api.route('/nounchunk')
+class NounChunk(Resource):
+    @api.expect(spacy)
+    def post(self):
+        p = api.payload
+        nounchunks = sp.getNounChunk(p['text'])
+        return nounchunks
+    

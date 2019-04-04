@@ -25,6 +25,9 @@ class NltkModel(object):
             
         return df
     
+    def getSisterTerms(self, str):
+        syns = wordnet.synsets(str)
+        return ''
     
     def getSimilarity(self, dict1, dict2):
         all_words_list = []
